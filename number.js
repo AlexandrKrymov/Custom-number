@@ -30,8 +30,6 @@
 
         var min = input.attr('min');
 
-        console.log(min);
-
         var max = input.attr('max');
 
         if(input.attr('step')){
@@ -43,6 +41,10 @@
             var step = 1;
 
         }
+
+        console.log(min);
+
+        console.log(input.val());
 
         if(+input.val() <= +min){
 
@@ -119,9 +121,3 @@
     };
 
 })(jQuery);
-
-$('.input').number({
-
-
-
-});

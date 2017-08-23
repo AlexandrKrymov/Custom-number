@@ -1,28 +1,88 @@
-span{
+
+
+.number-style input{
+
+    display: inline-block;
+    width: 30px;
+    vertical-align: middle;
+    text-align: center;
+    border: none;
+    font-size: 15px;
+    color: #000000;
+
+}
+
+.number-style span{
     position: relative;
     display: inline-block;
+    vertical-align: middle;
     width: 20px;
     height: 20px;
     border-radius: 50%;
     margin: 0 10px;
+    cursor: pointer;
 }
 
-span.number-minus{
-    border: 1px solid #fe0021;
+.number-style span.number-minus{
+    border: 2px solid #fe0021;
 }
 
-span.number-plus{
-    border: 1px solid #00fe02;
-}
-span.disabled{
-    border: 1px solid #a4a3a0;
+.number-style span.number-minus::after{
+
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -1px 0 0 -5px;
+    width: 10px;
+    height: 2px;
+    background-color: #fe0021;
 }
 
-input[type='number'] {
+.number-style span.number-plus{
+    border: 2px solid #00fe02;
+}
+
+.number-style span.number-plus::after{
+
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -1px 0 0 -5px;
+    width: 10px;
+    height: 2px;
+    background-color: #00fe02;
+}
+
+.number-style span.number-plus::before{
+
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -5px 0 0 -1px;
+    width: 2px;
+    height: 10px;
+    background-color: #00fe02;
+}
+
+.number-style span.disabled{
+    border: 2px solid #a4a3a0;
+}
+
+.number-style span.disabled::after,
+.number-style span.disabled::before{
+
+    background-color: #a4a3a0;
+
+}
+
+.number-style input[type='number'] {
     -moz-appearance:textfield;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+.number-style input::-webkit-outer-spin-button,
+.number-style input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
