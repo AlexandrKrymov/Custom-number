@@ -1,0 +1,28 @@
+span{
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0 10px;
+}
+
+span.number-minus{
+    border: 1px solid #fe0021;
+}
+
+span.number-plus{
+    border: 1px solid #00fe02;
+}
+span.disabled{
+    border: 1px solid #a4a3a0;
+}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
