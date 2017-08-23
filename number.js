@@ -42,10 +42,6 @@
 
         }
 
-        console.log(min);
-
-        console.log(input.val());
-
         if(+input.val() <= +min){
 
             minus.addClass('disabled');
