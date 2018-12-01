@@ -15,104 +15,59 @@
         options = $.extend(true, options, customOptions);
 
         var input = this;
+        var min = input.attr('min');
+        var max = input.attr('max');
+        var step = (input.attr('step')) ? +input.attr('step') : 1;
 
         input.wrap('<' + options.containerTag + ' class="' + options.containerClass + '">');
-
-        var wrapper = input.parent();
+        var wrapper = input.closest('.' + options.containerClass);
 
         wrapper.prepend('<' + options.btnTag + ' class="' + options.minus + '"></' + options.btnTag + '>');
-
         var minus = wrapper.find('.' + options.minus);
 
         wrapper.append('<' + options.btnTag + ' class="' + options.plus + '"></' + options.btnTag + '>');
-
         var plus = wrapper.find('.' + options.plus);
 
-        var min = input.attr('min');
+        if(!changeExtrem('minus')) minus.addClass('disabled');
+        if(!changeExtrem('plus')) plus.addClass('disabled');
 
-        var max = input.attr('max');
+        // Обрабатываем события
+        minus.on('click', {direction: 'minus'}, changeInput);
+        plus.on('click', {direction: 'plus'}, changeInput);
 
-        if(input.attr('step')){
-
-            var step = +input.attr('step');
-
-        } else {
-
-            var step = 1;
-
-        }
-
-        if(+input.val() <= +min){
-
-            minus.addClass('disabled');
-
-        }
-
-        if(+input.val() >= +max){
-
-            plus.addClass('disabled');
-
-        }
-
-        minus.click(function () {
-
-            var input = $(this).parent().find('input');
-
-            var value = input.val();
-
-            if(+value > +min){
-
-                input.val(+value - step);
-
-                if(+input.val() === +min){
-
-                    input.prev('.' + options.minus).addClass('disabled');
-
-                }
-
-                if(input.next('.' + options.plus).hasClass('disabled')){
-
-                    input.next('.' + options.plus).removeClass('disabled')
-
-                }
-
-            } else if(!min){
-
-                input.val(+value - step);
-
+        // Проверяем является ли значение input экстремальным
+        function changeExtrem(direction) {
+            var val = input.val();
+            if(direction === 'plus' && max){
+                return (val !== max);
+            } else if(direction === 'minus' && min){
+                return (val !== min);
+            } else {
+                return true;
             }
 
-        });
+        }
 
-        plus.click(function () {
+        // Меняем значение input
+        function changeInput(event){
+            var value = Number(input.val());
 
-            var input = $(this).parent().find('input');
+            if(!changeExtrem(event.data.direction)) return;
 
-            var value = input.val();
-
-            if(+value < +max){
-
-                input.val(+value + step);
-
-                if(+input.val() === +max){
-
-                    input.next('.' + options.plus).addClass('disabled');
-
-                }
-
-                if(input.prev('.' + options.minus).hasClass('disabled')){
-
-                    input.prev('.' + options.minus).removeClass('disabled')
-
-                }
-
-            } else if(!max){
-
-                input.val(+value + step);
-
+            if(event.data.direction === 'minus'){
+                input.val(value - step);
+                if(!changeExtrem('minus')) minus.addClass('disabled');
+                if(changeExtrem('plus')) plus.removeClass('disabled');
+            } else {
+                input.val(value + step);
+                if(!changeExtrem('plus')) plus.addClass('disabled');
+                if(changeExtrem('minus')) minus.removeClass('disabled');
             }
 
-        });
+            // Триггерим событие изменения на input
+            input.trigger('change');
+
+        }
 
     };
 
